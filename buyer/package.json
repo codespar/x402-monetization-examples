@@ -1,0 +1,15 @@
+{
+  "name": "x402-buyer-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pay any x402 endpoint with the standard x402 client.",
+  "scripts": {
+    "pay": "node pay.mjs"
+  },
+  "dependencies": {
+    "@x402/fetch": "^2.9.0",
+    "@x402/evm": "^2.9.0",
+    "viem": "^2.0.0"
+  }
+}

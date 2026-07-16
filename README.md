@@ -37,10 +37,21 @@ Get a key at [codespar.dev](https://codespar.dev). Full docs at [docs.codespar.d
 
 All three settle through the same pipeline and seal the same receipt. A seller picks the shape that fits.
 
+## Pay a paywall (the buyer side)
+
+To test what you built, an agent has to pay it. Two proven ways, both in [buyer/](./buyer):
+
+- **The CodeSpar CLI**, under a governed mandate with a cap, a payee allowlist, and a receipt. See [cli/](./cli). The same mandate pays a US API in USDC and a Brazilian store in Pix under one signature.
+- **A standard x402 client** (`@x402/fetch`). [`buyer/pay.mjs`](./buyer/pay.mjs) reads the 402, signs, retries, and returns the resource. It runs against any x402 endpoint.
+
+## Specs
+
+How settlement and the receipt work, and the open standards underneath, in [SPECS.md](./SPECS.md). Protocol: [x402](https://github.com/coinbase/x402). Receipt and KYA proposals: [agentic-payments-standards](https://github.com/codespar/agentic-payments-standards).
+
 ## What you need
 
 - A CodeSpar account and an API key (`csk_live_...` for production, `csk_test_...` for the Base Sepolia sandbox).
-- For the buyer side: any x402 client (Coinbase CDP, `@x402/fetch`, or an agent framework that speaks x402). The examples show the raw HTTP so you can wire any client.
+- For the buyer side: any x402 client (the [CodeSpar CLI](./cli), `@x402/fetch`, Coinbase CDP, or an agent framework that speaks x402). The examples show the raw HTTP so you can wire any client.
 
 ## Honesty
 
