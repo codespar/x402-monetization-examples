@@ -27,6 +27,15 @@ You create a resource once and get a URL on `gw.codespar.dev`. An agent that hit
 
 Get a key at [codespar.dev](https://codespar.dev). Full docs at [docs.codespar.dev](https://docs.codespar.dev).
 
+## Start here: the whole loop in one script
+
+[demo/](./demo) plays both sides on Base Sepolia. It creates a paywall, calls it once unpaid to show the raw `402`, pays it as an agent, prints the settlement, and cleans up. With a `csk_test_` key and a wallet holding a little test USDC:
+
+```bash
+cd demo && cp .env.example .env   # fill in the two keys
+npm install && npm start
+```
+
 ## Three ways to charge an agent
 
 | Mode | You get | Best for | Maturity |
