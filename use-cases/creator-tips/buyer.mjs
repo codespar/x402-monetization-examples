@@ -84,4 +84,4 @@ console.log(`  ${await tipRes.text()}`);
 
 console.log(`\nDone. The excerpt settled live in USDC.`);
 console.log(`The Pix tip request used the real endpoint shape, but it does not move real BRL yet:`);
-console.log(`the Pix leg is code-complete and gated on Celcoin production credentials.`);
+console.log(`the Pix leg is code-complete and gated on our banking partner's production credentials.`);

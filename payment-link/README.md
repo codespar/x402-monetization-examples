@@ -1,6 +1,6 @@
 # Payment link
 
-**Maturity: preview. The x402 leg is built and tested; the Pix leg is code-complete but needs Celcoin production credentials to move real BRL. No create UI in the dashboard yet.**
+**Maturity: preview. The x402 leg is built and tested; the Pix leg is code-complete but needs our banking partner's production credentials to move real BRL. No create UI in the dashboard yet.**
 
 A shareable, fixed-amount payment where the product is the payment itself: no upstream to proxy. One link can advertise more than one rail, priced independently (no FX), and closes after the first payment.
 

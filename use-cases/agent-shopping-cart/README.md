@@ -149,6 +149,6 @@ npm run buyer                    # three mandates, three spends, one wallet
 
 - The market-data paywall leg is production, settled on Base mainnet with real USDC, the same pipeline as [api-paywall](../../api-paywall).
 - The MCP-server and payment-link legs are preview: built and tested, but not yet in the dashboard, and their APIs may still change. See the maturity table in the [root README](../../README.md).
-- This example's payment link advertises USDC/x402 only. A payment link can also carry a Pix leg, but that leg is code-complete and does not move real BRL yet: it needs Celcoin production credentials, which are not yet signed (see the [root README's Honesty section](../../README.md#honesty)). Nothing in this example touches Pix.
+- This example's payment link advertises USDC/x402 only. A payment link can also carry a Pix leg, but that leg is code-complete and does not move real BRL yet: it needs our banking partner's production credentials, which are not yet signed (see the [root README's Honesty section](../../README.md#honesty)). Nothing in this example touches Pix.
 - `buyer.mjs` scrapes a mandate ID out of `codespar mandate create`'s stdout, because this repo does not pin the CLI's exact output format. Treat that parsing as a pattern to adapt, not a guaranteed contract; run `codespar mandate create --help` to check your installed version.
 - A `csk_test_` key settles everything on Base Sepolia and can never touch mainnet; a `csk_live_` key settles the paywall leg for real, same as any other CodeSpar API paywall.
