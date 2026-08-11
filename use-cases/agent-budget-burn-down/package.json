@@ -1,0 +1,11 @@
+{
+  "name": "x402-agent-budget-burn-down",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Burn a governed mandate down against a priced MCP server, and watch the per-tx and total caps fail safe.",
+  "scripts": {
+    "seller": "node seller.mjs",
+    "buyer": "node buyer.mjs"
+  }
+}

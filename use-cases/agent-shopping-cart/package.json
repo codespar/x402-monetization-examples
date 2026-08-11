@@ -1,0 +1,11 @@
+{
+  "name": "x402-agent-shopping-cart-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "One CodeSpar wallet pays three unrelated sellers, a paywall, an MCP tool, and a payment link, under one signature model.",
+  "scripts": {
+    "seller": "node seller.mjs",
+    "buyer": "node buyer.mjs"
+  }
+}

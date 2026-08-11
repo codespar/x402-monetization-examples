@@ -1,0 +1,11 @@
+{
+  "name": "x402-cross-border-agent-mandate-example",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "One mandate, two slots: pay a priced MCP tool in USDC and a Brazilian payment link in Pix, back to back, no FX.",
+  "scripts": {
+    "seller": "node seller.mjs",
+    "buyer": "node buyer.mjs"
+  }
+}

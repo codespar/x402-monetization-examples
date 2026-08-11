@@ -1,0 +1,16 @@
+{
+  "name": "x402-usecase-store-checkout",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "One payment link, two rails, one physical SKU: a sneaker checkout that closes after the first sale.",
+  "scripts": {
+    "sell": "node seller.mjs",
+    "buy": "node buyer.mjs"
+  },
+  "dependencies": {
+    "@x402/fetch": "^2.9.0",
+    "@x402/evm": "^2.9.0",
+    "viem": "^2.0.0"
+  }
+}
