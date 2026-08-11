@@ -1,6 +1,6 @@
 # Creator tips: an agent pays for the excerpt, then tips the journalist in Pix
 
-**Maturity: mixed. The USDC excerpt call runs on the same production pipeline as the API paywall. The Pix tip is preview: code-complete, gated on Celcoin production credentials.**
+**Maturity: mixed. The USDC excerpt call runs on the same production pipeline as the API paywall. The Pix tip is preview: code-complete, gated on our banking partner's production credentials.**
 
 A research agent needs one paragraph from a Brazilian journalist's piece. It calls her article API, pays $0.02 in USDC over x402, and gets the excerpt with no signup and no human approving the request. Then it settles a companion payment link's Pix leg: a R$5.00 tip to her real Pix key, `journalist@pix.br`. The journalist is paid in BRL. The payer is an autonomous agent, not a person with a bank app.
 
@@ -88,5 +88,5 @@ PRIVATE_KEY=0x... node buyer.mjs
 ## Honesty
 
 - The USDC excerpt call is the proven path: same pipeline as the production API paywall, settled on Base.
-- The Pix tip is code-complete but does not move real BRL yet. Per the repo's [Honesty section](../../README.md#honesty): "The Pix leg on payment links is code-complete but needs Celcoin production credentials to move real BRL." Running `buyer.mjs` end to end today settles the excerpt live and exercises the real `/pay/:slug/settle` request shape for the tip, but the tip itself does not land in the journalist's Pix account until those credentials are signed.
+- The Pix tip is code-complete but does not move real BRL yet. Per the repo's [Honesty section](../../README.md#honesty): "The Pix leg on payment links is code-complete but needs our banking partner's production credentials to move real BRL." Running `buyer.mjs` end to end today settles the excerpt live and exercises the real `/pay/:slug/settle` request shape for the tip, but the tip itself does not land in the journalist's Pix account until those credentials are signed.
 - Test everything on a `csk_test_` key and Base Sepolia before pointing `CODESPAR_API_KEY` or `PRIVATE_KEY` at anything real.

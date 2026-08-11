@@ -10,7 +10,7 @@ Seller B (Pix link)   POST /v1/payment-links  ──▶ gw.codespar.dev/pay/<slu
 
 Buyer   codespar mandate create --slot USDC:usdc:... --slot BRL:pix:...   one mandate, two slots
 Buyer   codespar spend  ──▶ MCP payee    USDC leg, settles on Base
-Buyer   codespar spend  ──▶ Pix payee    Pix leg, settles via Celcoin once production credentials are live
+Buyer   codespar spend  ──▶ Pix payee    Pix leg, settles once our banking partner's production credentials are live
 Buyer   codespar wallet                  both slots printed side by side, no FX
 ```
 
@@ -110,4 +110,4 @@ PAYMENT_LINK_URL=https://gw.codespar.dev/pay/<slug-from-seller.mjs> \
 
 - A `csk_test_` key settles the USDC leg on Base Sepolia by construction and can never touch mainnet, same as everywhere else in this repo.
 - The MCP-server surface (the USDC leg here) is built and tested but not yet in the dashboard, and its API may still change; treat it as preview, same as [mcp-server](../../mcp-server).
-- The Pix leg here is code-complete but needs Celcoin production credentials to move real BRL, same as [payment-link](../../payment-link). Running this example does not move real BRL; the USDC leg can settle for real on Base with a `csk_live_` key, the Pix leg cannot yet settle for real anywhere.
+- The Pix leg here is code-complete but needs our banking partner's production credentials to move real BRL, same as [payment-link](../../payment-link). Running this example does not move real BRL; the USDC leg can settle for real on Base with a `csk_live_` key, the Pix leg cannot yet settle for real anywhere.

@@ -5,6 +5,7 @@
     <em>Public, copy-paste examples. Pix leg included for the LATAM lane.</em>
   </p>
   <p align="center">
+    <a href="https://awesome.re"><img src="https://awesome.re/badge.svg" alt="Awesome" /></a>
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
     <img src="https://img.shields.io/badge/rail-x402%20on%20Base-0FA968.svg" alt="x402 on Base" />
   </p>
@@ -57,7 +58,7 @@ npm install && npm start
 |---|---|---|---|
 | **[API paywall](./api-paywall)** | `gw.codespar.dev/<slug>` in front of any HTTP API, charged per call | data APIs, any REST endpoint that charges per request | **Production**, settled on Base mainnet |
 | **[MCP server](./mcp-server)** | `gw.codespar.dev/mcp/<slug>`, priced per tool | MCP servers, tool marketplaces, per-capability billing | Preview (backend live, no dashboard UI yet) |
-| **[Payment link](./payment-link)** | `gw.codespar.dev/pay/<slug>`, a fixed-amount link in USDC or Pix | checkouts, credit packs, one-off purchases | Preview (Pix leg needs Celcoin production creds) |
+| **[Payment link](./payment-link)** | `gw.codespar.dev/pay/<slug>`, a fixed-amount link in USDC or Pix | checkouts, credit packs, one-off purchases | Preview (Pix leg needs our banking partner's production creds) |
 
 All three settle through the same pipeline and seal the same receipt. A seller picks the shape that fits.
 
@@ -81,7 +82,7 @@ How settlement and the receipt work, and the open standards underneath, in [SPEC
 
 - Test keys settle on Base Sepolia by construction and can never touch mainnet.
 - The API paywall is proven on Base mainnet with real USDC. The MCP-server and payment-link surfaces are built and tested but not yet in the dashboard, and their APIs may still change; treat them as preview.
-- The Pix leg on payment links is code-complete but needs Celcoin production credentials to move real BRL.
+- The Pix leg on payment links is code-complete but needs our banking partner's production credentials to move real BRL.
 
 ## Related
 

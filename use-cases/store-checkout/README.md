@@ -1,6 +1,6 @@
 # Store checkout: a real product, not a fractional-cent API call
 
-**Maturity: preview, same as [payment link](../../payment-link). The USDC/x402 leg settles live on Base; the Pix leg on this same link is code-complete but needs Celcoin production credentials to move real BRL.**
+**Maturity: preview, same as [payment link](../../payment-link). The USDC/x402 leg settles live on Base; the Pix leg on this same link is code-complete but needs our banking partner's production credentials to move real BRL.**
 
 ## The scenario
 
@@ -63,5 +63,5 @@ Calling the same link again after the first sale does not sell a second pair. `m
 ## Honesty
 
 - The USDC/x402 leg on this link settles the same way as the shipped payment-link example: EIP-3009 on Base, sandbox on a `csk_test_` key (Base Sepolia), mainnet on a `csk_live_` key.
-- The Pix leg on this link is code-complete but needs Celcoin production credentials to move real BRL. Nothing in this example moves real Reais today; do not represent it as a live Pix checkout.
+- The Pix leg on this link is code-complete but needs our banking partner's production credentials to move real BRL. Nothing in this example moves real Reais today; do not represent it as a live Pix checkout.
 - `payment-link` overall is preview: the API may still change, and there is no create UI in the dashboard yet.

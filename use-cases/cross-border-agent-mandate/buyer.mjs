@@ -104,5 +104,5 @@ console.log(
   `\nDone. One mandate, one signature, two receipts: a USDC leg and a Pix leg, no FX between them.`,
 );
 console.log(
-  `The Pix leg above runs the same governed pipeline as the USDC leg; it does not move real BRL until Celcoin production credentials are live (see ../README.md, Honesty).`,
+  `The Pix leg above runs the same governed pipeline as the USDC leg; it does not move real BRL until our banking partner's production credentials are live (see ../README.md, Honesty).`,
 );

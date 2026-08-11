@@ -56,6 +56,6 @@ const gatewayUrl = link.gateway_url ?? `https://gw.codespar.dev/pay/${slug}`;
 
 console.log(`Live at ${gatewayUrl}`);
 console.log(`  USDC leg: $89.00 to consumer ${CONSUMER_ID} (settles live over x402)`);
-console.log(`  Pix leg:  R$450.00 to ${PIX_KEY} (code-complete; needs Celcoin production creds to move real BRL)`);
+console.log(`  Pix leg:  R$450.00 to ${PIX_KEY} (code-complete; needs our banking partner's production creds to move real BRL)`);
 console.log(`\nOne sale closes it: max_uses is 1. Hand ${gatewayUrl} to a buyer.`);
 console.log(`Pay the USDC leg with: node buyer.mjs ${gatewayUrl}`);
