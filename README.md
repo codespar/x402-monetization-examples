@@ -5,6 +5,7 @@
     <em>Public, copy-paste examples. Pix leg included for the LATAM lane.</em>
   </p>
   <p align="center">
+    <a href="https://awesome.re"><img src="https://awesome.re/badge.svg" alt="Awesome" /></a>
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
     <img src="https://img.shields.io/badge/rail-x402%20on%20Base-0FA968.svg" alt="x402 on Base" />
   </p>
