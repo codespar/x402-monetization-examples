@@ -1,0 +1,10 @@
+{
+  "name": "x402-usecase-recurring-mandate-subscription",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "One api-paywall paid daily for a month under a single mandate sized with a total_cap, not a subscription object.",
+  "scripts": {
+    "create": "node seller.mjs"
+  }
+}

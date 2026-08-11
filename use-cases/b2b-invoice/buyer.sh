@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Buyer side: an AP agent pays the freight invoice under a governed mandate,
+# using the CodeSpar CLI's mandate/spend path (see ../../cli/README.md).
+#
+# The mandate is created once, capped at exactly $2,400 USDC (both the total
+# cap and the per-transaction cap) and allowlisted to exactly this invoice's
+# payment link. The agent never handles a private key or a signature it could
+# reuse elsewhere; it can only ever pay this one payee, up to this one amount.
+# `codespar spend` routes an http(s) payee to x402 automatically (the CLI
+# signs and settles the USDC/Base leg for you), and every spend is checked
+# against the cap and the allowlist before anything moves.
+#
+# Requires the CodeSpar CLI:
+#   npm install -g @codespar/cli
+#   codespar login
+#
+# Usage:
+#   ./buyer.sh                                # step 1: create the mandate
+#   MANDATE_ID=<id-from-step-1> ./buyer.sh    # step 2: spend it, then show the wallet
+
+set -euo pipefail
+
+PAYEE_URL="${PAYEE_URL:-https://gw.codespar.dev/pay/invoice-4471}"
+CONSUMER="${CONSUMER:-buyerco}"
+AGENT="${AGENT:-payer}"
+AMOUNT="${AMOUNT:-2400000000}"   # $2,400.00 in USDC atomic units (6 decimals)
+
+if [ -z "${MANDATE_ID:-}" ]; then
+  echo "[1/3] Creating a mandate capped and allowlisted to this exact invoice ..."
+  codespar mandate create --consumer "$CONSUMER" --agent "$AGENT" \
+    --payee "$PAYEE_URL" \
+    --slot "USDC:usdc:${AMOUNT}:${AMOUNT}"
+  echo
+  echo "Copy the mandate id printed above, then re-run:"
+  echo "  MANDATE_ID=<mandate-id> ./buyer.sh"
+  exit 0
+fi
+
+echo "[2/3] Spending the mandate to pay the invoice ..."
+codespar spend --mandate "$MANDATE_ID" --amount "$AMOUNT" --agent "$AGENT" --payee "$PAYEE_URL"
+
+echo
+echo "[3/3] Wallet: the debit and the sealed receipt ..."
+codespar wallet "$CONSUMER"

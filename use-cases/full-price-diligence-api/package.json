@@ -1,0 +1,10 @@
+{
+  "name": "full-price-diligence-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Create an $85 USDC api-paywall for a single company diligence report.",
+  "scripts": {
+    "create": "node seller.mjs"
+  }
+}
