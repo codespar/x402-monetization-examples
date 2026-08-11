@@ -62,6 +62,10 @@ npm install && npm start
 
 All three settle through the same pipeline and seal the same receipt. A seller picks the shape that fits.
 
+## Pricing models: what a seller can charge
+
+Flat, tiered, dynamic, and metered are live today; set `pricing_model` on creation. Each with a real example, plus the three reserved for later, in [PRICING.md](./PRICING.md).
+
 ## Pay a paywall (the buyer side)
 
 To test what you built, an agent has to pay it. Two proven ways, both in [buyer/](./buyer):
@@ -88,6 +92,7 @@ How settlement and the receipt work, and the open standards underneath, in [SPEC
 
 - [Awesome Agentic Commerce LATAM](https://github.com/codespar/awesome-agentic-commerce-latam) - the ecosystem index.
 - [MCP Dev LATAM](https://github.com/codespar/mcp-dev-latam) - 127 MCP servers for LATAM commerce.
+- [x402 on Dune Analytics](https://dune.com/x402) - ecosystem-wide x402 volume, not CodeSpar-specific.
 
 ## License
 
