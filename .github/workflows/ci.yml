@@ -52,4 +52,12 @@ jobs:
       # and the URL it prints has to resolve on that stub's gateway.
       # No network, no credentials, no test runner to install.
       - name: Run the example tests
-        run: node --test 'tests/**/*.test.mjs'
+        shell: bash
+        run: |
+          count=$(git ls-files 'tests/**/*.test.mjs' | wc -l | tr -d ' ')
+          if [ "$count" -eq 0 ]; then
+            echo "::error::found no test files, so this gate would pass vacuously"
+            exit 1
+          fi
+          echo "running $count test file(s)"
+          node --test 'tests/**/*.test.mjs'
