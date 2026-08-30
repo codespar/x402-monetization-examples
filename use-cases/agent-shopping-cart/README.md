@@ -82,7 +82,7 @@ curl -sX POST https://api.codespar.dev/v1/payment-links \
   }'
 ```
 
-Unlike the paywall and the MCP server above, `POST /v1/payment-links` takes no `slug`; the `201` response returns a server-generated one in `gateway_url`, e.g. `https://gw.codespar.dev/pay/a1b2c3`. Read it back off the response (`seller.mjs` does this for you).
+Unlike the paywall and the MCP server above, this create sends no `slug`, and a payment link carries no `gateway_url`: the `201` response returns the server-generated URL in `pay_url`, e.g. `https://gw.codespar.dev/pay/a1b2c3`. Read it back off the response (`seller.mjs` does this for you); a slug the server did not issue answers `404 payment_link_not_found`.
 
 Run all three in one shot with [`seller.mjs`](./seller.mjs).
 

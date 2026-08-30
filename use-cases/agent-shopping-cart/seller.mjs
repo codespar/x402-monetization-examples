@@ -104,12 +104,13 @@ const link = await create(
   },
   "payment-link create",
 );
-// Unlike the paywall and the mcp-server above, a payment link takes no slug;
-// gateway_url's slug is assigned by CodeSpar, so there is no safe fallback
-// to guess here if the field is missing from the response.
-const linkUrl = link.gateway_url;
+// Unlike the paywall and the mcp-server above, a payment link carries no
+// gateway_url: its URL is `pay_url`, over a slug CodeSpar assigns, so there is
+// no fallback to guess here if the field is missing from the response.
+// See https://docs.codespar.dev/docs/api/payment-links
+const linkUrl = link.pay_url;
 if (!linkUrl) {
-  console.error(`  created, but couldn't find gateway_url in the response: ${JSON.stringify(link)}`);
+  console.error(`  created, but couldn't find pay_url in the response: ${JSON.stringify(link)}`);
   process.exit(1);
 }
 console.log(`  live at ${linkUrl}`);

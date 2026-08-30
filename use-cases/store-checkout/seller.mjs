@@ -25,9 +25,7 @@ if (!CONSUMER_ID) {
   process.exit(1);
 }
 
-const slug = `aro-runner-${Date.now().toString(36)}`;
-
-console.log(`Creating checkout link "${slug}" for one Aro Runner sneaker ...`);
+console.log("Creating the checkout link for one Aro Runner sneaker ...");
 const res = await fetch(`${API}/v1/payment-links`, {
   method: "POST",
   headers: {
@@ -52,7 +50,16 @@ if (!res.ok) {
 }
 
 const link = await res.json();
-const gatewayUrl = link.gateway_url ?? `https://gw.codespar.dev/pay/${slug}`;
+// A payment link's slug is assigned by CodeSpar (the create body sends none),
+// so the checkout URL can only be read off the response: `pay_url`. There is
+// no slug to guess and no fallback to build, and a link URL that was not
+// issued by the server answers 404 payment_link_not_found.
+// See https://docs.codespar.dev/docs/api/payment-links
+const gatewayUrl = link.pay_url;
+if (!gatewayUrl) {
+  console.error(`created, but the response carries no pay_url: ${JSON.stringify(link)}`);
+  process.exit(1);
+}
 
 console.log(`Live at ${gatewayUrl}`);
 console.log(`  USDC leg: $89.00 to consumer ${CONSUMER_ID} (settles live over x402)`);

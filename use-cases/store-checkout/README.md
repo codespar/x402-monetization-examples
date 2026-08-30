@@ -31,7 +31,7 @@ curl -sX POST https://api.codespar.dev/v1/payment-links \
   }'
 ```
 
-Same shape as [payment-link](../../payment-link): one `accepts` entry per rail, each priced independently. `one_time: true` plus `max_uses: 1` is what makes this a single-unit sale instead of a reusable link; a second sale means creating a second link for the next pair in stock. The `201` response serves the checkout at `https://gw.codespar.dev/pay/<slug>`.
+Same shape as [payment-link](../../payment-link): one `accepts` entry per rail, each priced independently. `one_time: true` plus `max_uses: 1` is what makes this a single-unit sale instead of a reusable link; a second sale means creating a second link for the next pair in stock. The create sends no `slug`, so CodeSpar assigns one and the `201` response carries the checkout URL in `pay_url`, `https://gw.codespar.dev/pay/<slug>`. That is the only place the URL exists: a slug the server did not issue answers `404 payment_link_not_found`.
 
 Runnable version: [`seller.mjs`](./seller.mjs).
 

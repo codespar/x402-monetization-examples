@@ -50,7 +50,14 @@ if (!res.ok) {
 }
 
 const link = await res.json();
-const gatewayUrl = link.gateway_url ?? "https://gw.codespar.dev/pay/invoice-4471";
+// The slug is server-assigned (this create sends none), so "invoice-4471" is
+// the invoice number, never the URL. Read the URL off the response.
+// See https://docs.codespar.dev/docs/api/payment-links
+const gatewayUrl = link.pay_url;
+if (!gatewayUrl) {
+  console.error(`created, but the response carries no pay_url: ${JSON.stringify(link)}`);
+  process.exit(1);
+}
 
 console.log(`Live at ${gatewayUrl}`);
 console.log(`  $${AMOUNT} USDC to consumer ${CONSUMER_ID}, one payment, then the link closes.`);
