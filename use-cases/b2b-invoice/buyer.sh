@@ -14,13 +14,20 @@
 #   npm install -g @codespar/cli
 #   codespar login
 #
+# PAYEE_URL is the pay_url seller.mjs printed. CodeSpar assigns the link's
+# slug, so there is nothing to guess and no default worth having here.
+#
 # Usage:
-#   ./buyer.sh                                # step 1: create the mandate
-#   MANDATE_ID=<id-from-step-1> ./buyer.sh    # step 2: spend it, then show the wallet
+#   PAYEE_URL=<pay_url> ./buyer.sh                             # step 1: create the mandate
+#   PAYEE_URL=<pay_url> MANDATE_ID=<id-from-step-1> ./buyer.sh # step 2: spend it, then show the wallet
 
 set -euo pipefail
 
-PAYEE_URL="${PAYEE_URL:-https://gw.codespar.dev/pay/invoice-4471}"
+if [ -z "${PAYEE_URL:-}" ]; then
+  echo "Set PAYEE_URL to the pay_url that seller.mjs printed." >&2
+  echo "CodeSpar assigns the link's slug; a guessed one answers 404 payment_link_not_found." >&2
+  exit 1
+fi
 CONSUMER="${CONSUMER:-buyerco}"
 AGENT="${AGENT:-payer}"
 AMOUNT="${AMOUNT:-2400000000}"   # $2,400.00 in USDC atomic units (6 decimals)

@@ -1,0 +1,66 @@
+# These examples are copy-paste material: what merges here is what a prospect
+# runs. Until this file existed the repo had no checks at all, so a PR could
+# merge an unparseable example, or one that prints a URL nobody can pay, with
+# nothing in between it and a reader.
+#
+# Each gate below counts the files it walked and fails if that count is zero, so
+# a rename or a moved directory cannot turn a gate into a green no-op.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # `node --check` parses a file. It catches a typo that makes an example
+      # unparseable; it does not resolve imports and does not run anything.
+      - name: Parse every .mjs
+        shell: bash
+        run: |
+          count=$(git ls-files '*.mjs' | wc -l | tr -d ' ')
+          if [ "$count" -eq 0 ]; then
+            echo "::error::found no .mjs files, so this gate would pass vacuously"
+            exit 1
+          fi
+          echo "parsing $count .mjs files"
+          git ls-files -z '*.mjs' | xargs -0 -n1 node --check
+
+      - name: Parse every .sh
+        shell: bash
+        run: |
+          count=$(git ls-files '*.sh' | wc -l | tr -d ' ')
+          if [ "$count" -eq 0 ]; then
+            echo "::error::found no .sh files, so this gate would pass vacuously"
+            exit 1
+          fi
+          echo "parsing $count .sh files"
+          git ls-files -z '*.sh' | xargs -0 -n1 bash -n
+
+      # The behavioural gate. Each seller example is executed for real against a
+      # stub that answers with the objects the public API reference documents,
+      # and the URL it prints has to resolve on that stub's gateway.
+      # No network, no credentials, no test runner to install.
+      - name: Run the example tests
+        shell: bash
+        run: |
+          # `git ls-files` nao expande `**` como o shell: 'tests/**/*.test.mjs'
+          # casa ZERO em tests/x.test.mjs. Medido neste repo. O padrao abaixo e
+          # o que de fato casa, e o proprio guard pega se ele parar de casar.
+          count=$(git ls-files '*.test.mjs' | wc -l | tr -d ' ')
+          if [ "$count" -eq 0 ]; then
+            echo "::error::found no test files, so this gate would pass vacuously"
+            exit 1
+          fi
+          echo "running $count test file(s)"
+          node --test 'tests/**/*.test.mjs'

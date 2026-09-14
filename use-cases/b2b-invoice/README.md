@@ -13,9 +13,9 @@ A freight vendor's AR agent has a $2,400 invoice to collect, invoice #4471. It c
 The buyer's AP agent already holds a CodeSpar mandate scoped in advance for exactly this kind of payment: a slot capped at $2,400 USDC and allowlisted to this invoice's URL. It spends against that mandate to pay the link. Settlement is the same EIP-3009 USDC-on-Base handshake as every other example in this repo; the difference is who signs. Nobody hand-authorizes a wire, nobody re-types the invoice into a payment portal, and no human touches either company's accounting system. What lands on the buyer's side is a sealed receipt binding the mandate, the payee, and the settlement, and that receipt is the reconciliation record, not an entry pushed into either ledger.
 
 ```
-AR agent   ──POST /v1/payment-links──▶  gw.codespar.dev/pay/invoice-4471   (one_time, $2,400.00 USDC)
+AR agent   ──POST /v1/payment-links──▶  gw.codespar.dev/pay/<slug>   (one_time, $2,400.00 USDC)
 AP agent   ──codespar mandate create──▶  mandate: cap $2,400, payee = that exact URL
-AP agent   ──codespar spend──▶  gw.codespar.dev/pay/invoice-4471  ──x402/USDC on Base──▶  settle + sealed receipt
+AP agent   ──codespar spend──▶  gw.codespar.dev/pay/<slug>  ──x402/USDC on Base──▶  settle + sealed receipt
 ```
 
 ## 1. Issue the invoice (seller / AR side)
@@ -36,7 +36,7 @@ curl -sX POST https://api.codespar.dev/v1/payment-links \
   }'
 ```
 
-The `201` response serves the invoice at `https://gw.codespar.dev/pay/invoice-4471`. One rail, one entry: no Pix leg on this link, nothing to convert, nothing to overclaim. `one_time: true` plus `max_uses: 1` close the link on the first successful payment, the same as any other CodeSpar payment link.
+The create sends no `slug`, so CodeSpar assigns one and the `201` response carries the invoice URL in `pay_url`, `https://gw.codespar.dev/pay/<slug>`. "4471" is the invoice number, not the slug: the URL only exists on the response, and a slug the server did not issue answers `404 payment_link_not_found`. One rail, one entry: no Pix leg on this link, nothing to convert, nothing to overclaim. `one_time: true` plus `max_uses: 1` close the link on the first successful payment, the same as any other CodeSpar payment link.
 
 Runnable version: [`seller.mjs`](./seller.mjs).
 
@@ -54,14 +54,16 @@ codespar login
 
 # 1. A mandate capped at exactly $2,400 USDC and allowlisted to this invoice's link.
 #    --slot is CURRENCY:RAIL:TOTAL_CAP:PER_TX_CAP, in USDC atomic units (6 decimals).
+PAYEE_URL=<the pay_url seller.mjs printed>
+
 codespar mandate create --consumer buyerco --agent payer \
-  --payee https://gw.codespar.dev/pay/invoice-4471 \
+  --payee "$PAYEE_URL" \
   --slot USDC:usdc:2400000000:2400000000
 
 # 2. Spend it. An http(s) payee routes to x402 (USDC on Base, settled on-chain);
 #    the CLI signs and settles the authorization for you.
 codespar spend --mandate <mandate-id> --amount 2400000000 --agent payer \
-  --payee https://gw.codespar.dev/pay/invoice-4471
+  --payee "$PAYEE_URL"
 
 # 3. The wallet: the USDC slot now debited by $2,400, and the sealed receipt.
 codespar wallet buyerco
@@ -71,9 +73,11 @@ codespar wallet buyerco
 
 Runnable version: [`buyer.sh`](./buyer.sh).
 
+`PAYEE_URL` is required: it is the `pay_url` step 1 printed. There is no default, because a guessed slug is a link that does not exist.
+
 ```bash
-./buyer.sh
-MANDATE_ID=<mandate-id-from-step-1> ./buyer.sh
+PAYEE_URL=<pay_url from step 1> ./buyer.sh
+PAYEE_URL=<pay_url from step 1> MANDATE_ID=<mandate-id-from-step-1> ./buyer.sh
 ```
 
 ## Files
